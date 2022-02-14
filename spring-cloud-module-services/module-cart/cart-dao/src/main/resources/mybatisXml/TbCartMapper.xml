@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.flk.cloud.cart.data.mapper.TbCartMapper" >
+  <resultMap id="BaseResultMap" type="com.flk.cloud.cart.data.bean.TbCart" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="is_deleted" property="isDeleted" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, goods_id, create_time, update_time, is_deleted
+  </sql>
+
+  <insert id="insert" parameterType="com.flk.cloud.cart.data.bean.TbCart" >
+    insert into tb_cart (id, user_id, goods_id,
+      create_time, update_time, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT},
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{isDeleted,jdbcType=TINYINT}
+      )
+  </insert>
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_cart
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="deleteById" parameterType="java.lang.Long" >
+    UPDATE
+      tb_cart
+    SET
+      is_deleted = 1
+    WHERE
+      id = #{id}
+  </update>
+</mapper>
